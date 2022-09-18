@@ -4,8 +4,14 @@ package edu.westga.cs3110.unicoder.model;
 public class Codepoint {
 	String codepoint;
 	
-	public Codepoint() {
-		codepoint = "0x1F682";
+	public Codepoint(String codepoint) {
+		if (codepoint == null) {
+			throw new NullPointerException("codepoint can not be null");
+		}
+		if (codepoint == "") {
+			throw new IllegalArgumentException("codepoint can not be empty");
+		}
+		this.codepoint = codepoint;
 	}
 	
 	public String getCodepoint() {
@@ -14,7 +20,7 @@ public class Codepoint {
 	
 	public String toUTF32() {
 		String result = "0x";
-		result += ("00000000" + this.codepoint.substring(2)).substring(this.codepoint.substring(2).length());
+		result += ("00000000" + this.codepoint.substring(2)).substring(this.codepoint.substring(2).length());	
 		return result;
 		
 	}

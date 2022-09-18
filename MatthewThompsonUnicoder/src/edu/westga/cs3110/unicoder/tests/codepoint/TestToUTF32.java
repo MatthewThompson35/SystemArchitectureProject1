@@ -10,7 +10,7 @@ class TestToUTF32 {
 
 	@Test
 	public void testConstructor() {
-		Codepoint codepoint = new Codepoint();
+		Codepoint codepoint = new Codepoint("0x1F682");
 		assertTrue("0x0001F682".equalsIgnoreCase(codepoint.toUTF32()));
 	}
 
