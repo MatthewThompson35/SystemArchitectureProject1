@@ -1,5 +1,6 @@
 package edu.westga.cs3110.unicoder.model;
 
+import java.io.UnsupportedEncodingException;
 
 public class Codepoint {
 	String codepoint;
@@ -22,18 +23,20 @@ public class Codepoint {
 		String result = "0x";
 		result += ("00000000" + this.codepoint.substring(2)).substring(this.codepoint.substring(2).length());	
 		return result;
+	}
+	
+	public String toUTF16() throws UnsupportedEncodingException {
 		
-	}
-	
-	public String toUTF16() {
 		return this.codepoint;
 	}
 	
-	public String toUTF8() {
+	public String toUTF8() throws UnsupportedEncodingException {
+		String result = hexToBinary(this.codepoint.substring(2));
 		return this.codepoint;
 	}
 	
-	private String hexToBin(String hex){
+	
+	private String hexToBinary(String hex){
         hex = hex.replaceAll("0", "0000");
         hex = hex.replaceAll("1", "0001");
         hex = hex.replaceAll("2", "0010");
