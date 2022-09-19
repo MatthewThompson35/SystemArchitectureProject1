@@ -31,7 +31,11 @@ public class Codepoint {
 	}
 	
 	public String toUTF8() throws UnsupportedEncodingException {
+		if(Integer.parseUnsignedInt(this.codepoint.substring(2),16) >= Integer.parseUnsignedInt("10000",16) && Integer.parseUnsignedInt(this.codepoint.substring(2),16) <= Integer.parseUnsignedInt("10FFFF",16)) {
+			
+		}
 		String result = hexToBinary(this.codepoint.substring(2));
+		System.out.print(result);
 		return this.codepoint;
 	}
 	
