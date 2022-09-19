@@ -1,6 +1,7 @@
 package edu.westga.cs3110.unicoder.model;
 
 import java.io.UnsupportedEncodingException;
+import java.math.BigInteger;
 
 public class Codepoint {
 	String codepoint;
@@ -31,13 +32,16 @@ public class Codepoint {
 	}
 	
 	public String toUTF8() throws UnsupportedEncodingException {
+		String hex = "";
 		if(Integer.parseUnsignedInt(this.codepoint.substring(2),16) >= Integer.parseUnsignedInt("10000",16) && Integer.parseUnsignedInt(this.codepoint.substring(2),16) <= Integer.parseUnsignedInt("10FFFF",16)) {
-			
+			String binary = this.hexToBinary(this.codepoint.substring(2));
+			String result = "11110";
+			hex = new BigInteger(result, 2).toString(16);
 		}
-		String result = hexToBinary(this.codepoint.substring(2));
-		System.out.print(result);
-		return this.codepoint;
+		System.out.println(hex);
+		return hex;
 	}
+	
 	
 	
 	private String hexToBinary(String hex){
