@@ -17,10 +17,6 @@ public class Codepoint {
 		this.codepoint = codepoint;
 	}
 
-	public String getCodepoint() {
-		return this.codepoint;
-	}
-
 	public String toUTF32() {
 		String result = "0x";
 		result += ("00000000" + this.codepoint.substring(2)).substring(this.codepoint.substring(2).length());
@@ -38,10 +34,8 @@ public class Codepoint {
 			intValue -= 0x10000;
 			int high = (intValue >> 10) + 0xD800;
 			int low = (intValue & 0x3FF) + 0xDC00;
-			result += "0x";
-			result += ("0000" + Integer.toHexString(high)).substring(Integer.toHexString(high).length());
-			result += " 0x";
-			result += ("0000" + Integer.toHexString(low)).substring(Integer.toHexString(low).length());
+			result += "0x" + ("0000" + Integer.toHexString(high)).substring(Integer.toHexString(high).length());
+			result += " 0x" + ("0000" + Integer.toHexString(low)).substring(Integer.toHexString(low).length());
 		}
 		System.out.println(result);
 		return result;
@@ -49,52 +43,42 @@ public class Codepoint {
 
 	public String toUTF8() {
 		String result = "";
+		String hex = this.codepoint.substring(2);
+		int hexInt = Integer.parseInt(hex, 16);
+		int secondByte = 11000000;
+		int thirdByte = 11100000;
+		int fourthByte = 11110000;
+		int byteContinuation = 10000000;
+		int mask = 00111111;
+		if (hexInt <= 0x7F) {
+			result += "0x" + ("00" + hex).substring(hex.length());
+		} else if (hexInt <= 0x7FF) {
+			int first = (hexInt >> 6) + secondByte;
+			int second = (hexInt & mask) + byteContinuation;
+			result += "0x" + ("00" + Integer.toHexString(first)).substring(Integer.toHexString(first).length());
+			result += " 0x" + ("00" + Integer.toHexString(second)).substring(Integer.toHexString(second).length());
+		} else if (hexInt <= 0xFFFF) {
+			int first = (hexInt >> 12) + thirdByte;
+			int second = ((hexInt >> 6) & mask) + byteContinuation;
+			int third = (hexInt & mask) + byteContinuation;
+			result += "0x" + ("00" + Integer.toHexString(first)).substring(Integer.toHexString(first).length());
+			result += " 0x" + ("00" + Integer.toHexString(second)).substring(Integer.toHexString(second).length());
+			result += " 0x" + ("00" + Integer.toHexString(third)).substring(Integer.toHexString(third).length());
+		} else {
+			int first = (hexInt >> 18) + fourthByte;
+			int second = ((hexInt >> 12) & mask) + byteContinuation;
+			int third = ((hexInt >> 6) & mask) + byteContinuation;
+			int fourth = (hexInt & mask) + byteContinuation;
+			result += "0x" + ("00" + Integer.toHexString(first)).substring(Integer.toHexString(first).length());
+			result += " 0x" + ("00" + Integer.toHexString(second)).substring(Integer.toHexString(second).length());
+			result += " 0x" + ("00" + Integer.toHexString(third)).substring(Integer.toHexString(third).length());
+			result += " 0x" + ("00" + Integer.toHexString(fourth)).substring(Integer.toHexString(fourth).length());
+		}
 		return result;
-//		String hex = this.codepoint.substring(2);
-//		String result = "0x";
-//		Stack<String> stack = new Stack<String>();
-//		int intValue = Integer.parseInt(hex, 16);
-//		if(intValue >= 0x10000 && intValue <= 0x10FFFF) {
-//			String binary = this.hexToBinary(this.codepoint.substring(2));
-//			char[] list = binary.toCharArray();
-//			int count = 0;
-//			for(int i = list.length - 1; i >= 0; i--) {
-//				if(count == 6) {
-//					stack.push(String.valueOf(list[i]));
-//					stack.push("10");
-//					count++;
-//				}
-//				if(count == 12) {
-//					stack.push(String.valueOf(list[i]));
-//					stack.push("10");
-//					count++;
-//				}
-//				stack.push(String.valueOf(list[i]));
-//				count ++;
-//			}
-//			hex = new BigInteger(result, 2).toString(16);
-//		}
-//		return hex;
 	}
 
-	private String hexToBinary(String hex) {
-		hex = hex.replaceAll("0", "0000");
-		hex = hex.replaceAll("1", "0001");
-		hex = hex.replaceAll("2", "0010");
-		hex = hex.replaceAll("3", "0011");
-		hex = hex.replaceAll("4", "0100");
-		hex = hex.replaceAll("5", "0101");
-		hex = hex.replaceAll("6", "0110");
-		hex = hex.replaceAll("7", "0111");
-		hex = hex.replaceAll("8", "1000");
-		hex = hex.replaceAll("9", "1001");
-		hex = hex.replaceAll("A", "1010");
-		hex = hex.replaceAll("B", "1011");
-		hex = hex.replaceAll("C", "1100");
-		hex = hex.replaceAll("D", "1101");
-		hex = hex.replaceAll("E", "1110");
-		hex = hex.replaceAll("F", "1111");
-		return hex;
+	public String getCodepoint() {
+		return this.codepoint;
 	}
 
 }
