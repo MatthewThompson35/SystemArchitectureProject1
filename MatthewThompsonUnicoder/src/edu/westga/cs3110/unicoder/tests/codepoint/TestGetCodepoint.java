@@ -1,7 +1,6 @@
 package edu.westga.cs3110.unicoder.tests.codepoint;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.jupiter.api.Assertions.*;
 
 import org.junit.jupiter.api.Test;
 

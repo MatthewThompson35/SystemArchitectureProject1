@@ -1,6 +1,6 @@
 package edu.westga.cs3110.unicoder.tests.codepoint;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.Assert.assertTrue;
 
 import java.io.UnsupportedEncodingException;
 
@@ -15,7 +15,7 @@ class TestToUTF32 {
 		Codepoint codepoint = new Codepoint("0x1F682");
 		assertTrue("0x0001F682".equalsIgnoreCase(codepoint.toUTF32()));
 	}
-	
+
 	@Test
 	public void testUTF32Small() throws UnsupportedEncodingException {
 		Codepoint codepoint = new Codepoint("0x1");

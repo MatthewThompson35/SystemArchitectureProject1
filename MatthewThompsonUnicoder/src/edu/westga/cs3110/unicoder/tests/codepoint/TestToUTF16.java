@@ -1,12 +1,10 @@
 package edu.westga.cs3110.unicoder.tests.codepoint;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.Assert.assertTrue;
 
 import org.junit.jupiter.api.Test;
 
 import edu.westga.cs3110.unicoder.model.Codepoint;
-
-import org.junit.jupiter.api.Test;
 
 class TestToUTF16 {
 
@@ -27,14 +25,13 @@ class TestToUTF16 {
 		Codepoint codepoint = new Codepoint("0xD7FF");
 		assertTrue("0xD7FF".equalsIgnoreCase(codepoint.toUTF16()));
 	}
-	
+
 	@Test
 	public void testUTF16LowerBound10000() {
 		Codepoint codepoint = new Codepoint("0x10000");
 		assertTrue("0xD800 0xDC00".equalsIgnoreCase(codepoint.toUTF16()));
 	}
-	
-	
+
 	@Test
 	public void testUTF16UpperBoundE000() {
 		Codepoint codepoint = new Codepoint("0xE000");
