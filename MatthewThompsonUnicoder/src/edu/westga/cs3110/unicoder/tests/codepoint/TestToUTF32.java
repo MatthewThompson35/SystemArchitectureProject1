@@ -13,8 +13,6 @@ class TestToUTF32 {
 	@Test
 	public void testUTF32Normal() throws UnsupportedEncodingException {
 		Codepoint codepoint = new Codepoint("0x1F682");
-		codepoint.toUTF16();
-		codepoint.toUTF8();
 		assertTrue("0x0001F682".equalsIgnoreCase(codepoint.toUTF32()));
 	}
 	

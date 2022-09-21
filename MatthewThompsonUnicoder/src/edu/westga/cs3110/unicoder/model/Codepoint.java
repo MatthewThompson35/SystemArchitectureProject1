@@ -37,7 +37,6 @@ public class Codepoint {
 			result += "0x" + ("0000" + Integer.toHexString(high)).substring(Integer.toHexString(high).length());
 			result += " 0x" + ("0000" + Integer.toHexString(low)).substring(Integer.toHexString(low).length());
 		}
-		System.out.println(result);
 		return result;
 	}
 
@@ -45,11 +44,11 @@ public class Codepoint {
 		String result = "";
 		String hex = this.codepoint.substring(2);
 		int hexInt = Integer.parseInt(hex, 16);
-		int secondByte = 11000000;
-		int thirdByte = 11100000;
-		int fourthByte = 11110000;
-		int byteContinuation = 10000000;
-		int mask = 00111111;
+		int secondByte = 0xC0;
+		int thirdByte = 0xE0;
+		int fourthByte = 0xF0;
+		int byteContinuation = 0x80;
+		int mask = 0x3F;
 		if (hexInt <= 0x7F) {
 			result += "0x" + ("00" + hex).substring(hex.length());
 		} else if (hexInt <= 0x7FF) {
@@ -74,6 +73,7 @@ public class Codepoint {
 			result += " 0x" + ("00" + Integer.toHexString(third)).substring(Integer.toHexString(third).length());
 			result += " 0x" + ("00" + Integer.toHexString(fourth)).substring(Integer.toHexString(fourth).length());
 		}
+		System.out.println(result);
 		return result;
 	}
 
